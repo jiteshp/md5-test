@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>MD5 Test</title>
+	<script type="text/javascript" src="js/md5-paul.js"></script>
+	<script type="text/javascript" src="js/md5-joseph.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		/**
+		 * Timer function
+		 * Accepts the function to execute. Calculates & returns the time required to execute it.
+		 */
+		function timer( f ) {
+			return function( x ) {
+				var n1 = new Date();
+				f( x );
+				return new Date() - n1;
+			};
+		}
+
+		var s 		   = 'jitesh.patil@gmail.com';
+		var pMD5 	   = timer( function(s) { hex_md5( s ); } );
+		var jMD5 	   = timer( function(s) { md5( s ); } );
+
+		var pTime = jTime = 0;
+		var iterations = 1;
+
+		while( 100000 >= iterations ) {
+			for( i = 0; i < iterations; i++ ) {
+				pTime += pMD5( 'execute' );
+				jTime += jMD5( 'execute' );
+			}
+
+			document.write( 'Iterations: ', iterations, '<br />' );
+			document.write( 'Average time for Paul\'s script: ', pTime / iterations, '<br />' );
+			document.write( 'Average time for Josephs\'s script: ', jTime / iterations, '<br />' );
+			document.write( 'Josephs\'s script is ', ( pTime - jTime ) / pTime * 100, '% faster', '<br /><br />' );
+
+			iterations *= 10;
+		}
+	</script>
+</body>
+</html>
